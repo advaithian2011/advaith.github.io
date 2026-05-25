@@ -1,31 +1,411 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Advaith's Portfolio</title>
-<style>
-body { font-family: Arial; max-width: 700px; margin: auto; padding: 20px; }
-h1 { color: #2c3e50; }
-.section { margin-bottom: 30px; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advaith Praveen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --blue: #6fa3d8;
+      --dark: #1a1a2e;
+      --light: #f9f9f7;
+      --mono: 'Space Mono', monospace;
+      --serif: 'Playfair Display', serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--light); color: #222; font-family: var(--sans); }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(249,249,247,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(111,163,216,0.15);
+    }
+    .nav-logo { font-family: var(--mono); font-size: 0.9rem; color: var(--blue); letter-spacing: 0.15em; font-weight: 700; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; color: #555; text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--blue); }
+    .theme-toggle { background: none; border: 1px solid var(--blue); color: var(--blue); font-family: var(--mono); font-size: 0.7rem; padding: 0.3rem 0.7rem; cursor: pointer; border-radius: 2px; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; padding: 8rem 3rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-tag { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 1.5rem; }
+    .hero h1 { font-family: var(--serif); font-size: clamp(3.5rem, 8vw, 7rem); line-height: 1.05; font-weight: 400; }
+    .hero h1 em { font-style: italic; color: var(--blue); }
+    .hero-sub { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.18em; color: #888; text-transform: uppercase; margin: 1.5rem 0 2rem; }
+    .hero-bio { max-width: 500px; font-size: 1rem; color: #555; line-height: 1.75; margin-bottom: 2.5rem; font-family: var(--mono); font-size: 0.82rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.75rem 1.5rem; text-decoration: none; border: 1px solid; transition: all 0.2s; cursor: pointer; }
+    .btn-outline { border-color: #222; color: #222; background: transparent; }
+    .btn-outline:hover { background: #222; color: var(--light); }
+    .btn-fill { border-color: var(--blue); color: var(--light); background: var(--blue); }
+    .btn-fill:hover { background: transparent; color: var(--blue); }
+    .hero-stats { display: flex; gap: 3rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(111,163,216,0.2); }
+    .stat-num { font-family: var(--serif); font-size: 2rem; color: var(--blue); }
+    .stat-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; color: #999; text-transform: uppercase; margin-top: 0.2rem; }
+
+    /* SECTIONS */
+    section { padding: 5rem 3rem; max-width: 900px; margin: 0 auto; }
+    .section-num { font-family: var(--mono); font-size: 0.7rem; color: var(--blue); letter-spacing: 0.15em; }
+    .section-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; margin-top: 0.3rem; margin-bottom: 3rem; }
+    .divider { width: 100%; height: 1px; background: rgba(111,163,216,0.2); margin: 0 auto; }
+
+    /* ACADEMICS */
+    .card { border: 1px solid rgba(111,163,216,0.25); padding: 2rem; margin-bottom: 1.5rem; position: relative; }
+    .card-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.18em; color: var(--blue); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .card h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 400; margin-bottom: 0.4rem; }
+    .card p { font-family: var(--mono); font-size: 0.78rem; color: #777; line-height: 1.7; margin-bottom: 0.8rem; }
+    .tag { display: inline-block; border: 1px solid rgba(111,163,216,0.4); font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.12em; padding: 0.25rem 0.6rem; color: var(--blue); margin-right: 0.4rem; margin-top: 0.3rem; }
+    .skills-list { font-family: var(--mono); font-size: 0.78rem; color: #555; line-height: 1.8; }
+
+    /* PROJECTS */
+    .project { display: grid; grid-template-columns: 3rem 1fr; gap: 1.5rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(111,163,216,0.15); }
+    .project-num { font-family: var(--serif); font-size: 2rem; color: rgba(111,163,216,0.3); font-style: italic; padding-top: 0.2rem; }
+    .project h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .project p { font-family: var(--mono); font-size: 0.78rem; color: #777; line-height: 1.7; margin-bottom: 0.8rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    /* ACTIVITIES */
+    .activities-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+    .activity-card { border: 1px solid rgba(111,163,216,0.2); padding: 1.5rem; text-align: center; }
+    .activity-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .activity-card h4 { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: #333; margin-bottom: 0.5rem; }
+    .activity-card p { font-family: var(--mono); font-size: 0.7rem; color: #888; line-height: 1.6; }
+
+    /* PASSIONS */
+    .passion { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(111,163,216,0.15); }
+    .passion-icon { font-size: 1.5rem; margin-bottom: 0.6rem; }
+    .passion h3 { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: #333; margin-bottom: 0.5rem; }
+    .passion p { font-family: var(--mono); font-size: 0.78rem; color: #777; line-height: 1.8; max-width: 600px; }
+
+    /* AWARDS */
+    .award { display: grid; grid-template-columns: 1rem 1fr; gap: 1.5rem; margin-bottom: 2rem; padding-left: 1rem; border-left: 2px solid rgba(111,163,216,0.3); position: relative; }
+    .award::before { content: ''; position: absolute; left: -5px; top: 0.4rem; width: 8px; height: 8px; background: var(--blue); border-radius: 50%; }
+    .award-year { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--blue); text-transform: uppercase; }
+    .award h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; margin: 0.3rem 0; }
+    .award p { font-family: var(--mono); font-size: 0.75rem; color: #888; line-height: 1.65; }
+
+    /* BLOG */
+    .blog-post { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(111,163,216,0.15); }
+    .blog-date { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--blue); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .blog-post h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; margin-bottom: 0.5rem; }
+    .blog-post p { font-family: var(--mono); font-size: 0.78rem; color: #888; line-height: 1.7; margin-bottom: 0.7rem; }
+    .read-more { font-family: var(--mono); font-size: 0.7rem; color: var(--blue); text-decoration: none; letter-spacing: 0.1em; border-bottom: 1px solid rgba(111,163,216,0.4); padding-bottom: 1px; }
+
+    /* CONTACT */
+    .contact-quote { font-family: var(--serif); font-size: clamp(1.4rem, 3vw, 2rem); font-style: italic; color: #333; margin-bottom: 1.5rem; line-height: 1.4; }
+    .contact-info { margin: 2rem 0; }
+    .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; font-family: var(--mono); font-size: 0.78rem; color: #555; }
+    .contact-item span { font-size: 1rem; }
+    .contact-form { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .form-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; color: var(--blue); text-transform: uppercase; display: block; margin-bottom: 0.3rem; }
+    .form-input { width: 100%; border: 1px solid rgba(111,163,216,0.3); background: transparent; padding: 0.75rem 1rem; font-family: var(--mono); font-size: 0.78rem; color: #333; outline: none; transition: border-color 0.2s; }
+    .form-input:focus { border-color: var(--blue); }
+    textarea.form-input { height: 120px; resize: vertical; }
+
+    /* FOOTER */
+    footer { text-align: center; padding: 3rem; border-top: 1px solid rgba(111,163,216,0.2); font-family: var(--mono); font-size: 0.68rem; color: #aaa; letter-spacing: 0.12em; }
+    footer a { color: var(--blue); text-decoration: none; margin-left: 1rem; }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    }
+  </style>
 </head>
 <body>
-<h1>👋 Hi, I'm Advaith!</h1>
-<p>10th Grade Student | Passionate about Science & Technology</p>
 
-<div class="section">
-<h2>🏆 Accomplishments</h2>
-<ul>
-<li>Honor Roll – Fall 2024</li>
-<li>Science Fair 2nd Place</li>
-</ul>
-</div>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">ADVAITH.</div>
+    <ul class="nav-links">
+      <li><a href="#academics">Academics</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#activities">Activities</a></li>
+      <li><a href="#awards">Awards</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
 
-<div class="section">
-<h2>📚 Current Tasks & Goals</h2>
-<ul>
-<li>Complete Math project by June 1</li>
-<li>Prepare for SAT prep course</li>
-</ul>
-</div>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Desert Mountain High School · Scottsdale, AZ</div>
+    <h1>Advaith<br><em>Praveen</em></h1>
+    <div class="hero-sub">Student · Builder · Explorer</div>
+    <p class="hero-bio">A high school student at Desert Mountain, passionate about robotics, Python, and the relentless pursuit of discovery. Building things, breaking things, and figuring out who I want to be.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-outline">View My Work</a>
+      <a href="#contact" class="btn btn-fill">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">2026</div><div class="stat-label">Class Year</div></div>
+      <div><div class="stat-num">3+</div><div class="stat-label">Active Projects</div></div>
+      <div><div class="stat-num">∞</div><div class="stat-label">Curiosity</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ACADEMICS -->
+  <section id="academics">
+    <div class="section-num">01</div>
+    <h2 class="section-title">Academics</h2>
+    <div class="card">
+      <div class="card-label">Current School</div>
+      <h3>Desert Mountain High School</h3>
+      <p>Scottsdale, Arizona · Pursuing a rigorous academic curriculum with a focus on STEM disciplines and critical thinking.</p>
+      <span class="tag">Enrolled · Class of 2026</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Focus Areas</div>
+      <h3>STEM & Computer Science</h3>
+      <p>Specializing in mathematics, sciences, and emerging technologies. Passionate about the intersection of engineering and creative problem-solving.</p>
+      <span class="tag">AP / Honors Track</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Technical Skills</div>
+      <h3>Programming & Engineering</h3>
+      <p class="skills-list">Python · Robotics · CAD Design · Circuit Design · Algorithm Development · Data Structures</p>
+      <span class="tag">Self-Taught + Coursework</span>
+    </div>
+    <div class="card">
+      <div class="card-label">Extracurricular Learning</div>
+      <h3>Beyond the Classroom</h3>
+      <p>Actively exploring online platforms, competitions, and real-world projects to supplement formal education and develop expertise beyond the curriculum.</p>
+      <span class="tag">Continuous Learning</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-num">02</div>
+    <h2 class="section-title">Projects</h2>
+    <div class="project">
+      <div class="project-num">O1</div>
+      <div>
+        <h3>Autonomous Navigation Robot</h3>
+        <p>Designing and building an autonomous robot capable of mapping and navigating unknown environments using sensor fusion and real-time decision-making algorithms. Part of my robotics journey at Desert Mountain.</p>
+        <div class="tags"><span class="tag">Robotics</span><span class="tag">Python</span><span class="tag">Arduino</span><span class="tag">Sensors</span><span class="tag">Pathfinding</span></div>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-num">O2</div>
+      <div>
+        <h3>Python Automation Scripts</h3>
+        <p>A collection of Python utilities to automate repetitive tasks — from file organization and data scraping to sending automated reports. Built to solve real problems in daily life.</p>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">APIs</span><span class="tag">CLI Tools</span></div>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-num">O3</div>
+      <div>
+        <h3>Robotics Club Competition Build</h3>
+        <p>Contributing to the school's robotics team with mechanical design, programming, and strategy planning for regional competitions. A team effort that blends engineering and sportsmanship.</p>
+        <div class="tags"><span class="tag">Team Project</span><span class="tag">Mechanical Design</span><span class="tag">Competition</span></div>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-num">O4</div>
+      <div>
+        <h3>Personal Portfolio Website</h3>
+        <p>This very site — designed and deployed as a living document of growth, exploration, and identity. Built to share who I am with the world.</p>
+        <div class="tags"><span class="tag">Web Dev</span><span class="tag">HTML/CSS</span><span class="tag">Design</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ACTIVITIES -->
+  <section id="activities">
+    <div class="section-num">03</div>
+    <h2 class="section-title">Sports & Activities</h2>
+    <div class="activities-grid">
+      <div class="activity-card">
+        <div class="activity-icon">🤖</div>
+        <h4>Robotics Club</h4>
+        <p>Core member of Desert Mountain's robotics team. Design, build, and compete at the regional level.</p>
+      </div>
+      <div class="activity-card">
+        <div class="activity-icon">💻</div>
+        <h4>Coding Club</h4>
+        <p>Collaborative problem-solving, hackathons, and peer mentoring in programming and tech skills.</p>
+      </div>
+      <div class="activity-card">
+        <div class="activity-icon">🏃</div>
+        <h4>Athletics</h4>
+        <p>Active and competitive. Sports teach discipline, teamwork, and mental resilience.</p>
+      </div>
+      <div class="activity-card">
+        <div class="activity-icon">🎓</div>
+        <h4>Academic Teams</h4>
+        <p>Participating in academic competitions and STEM olympiads to push intellectual limits.</p>
+      </div>
+      <div class="activity-card">
+        <div class="activity-icon">🌐</div>
+        <h4>Community Service</h4>
+        <p>Volunteering and giving back to the Scottsdale community through organized initiatives.</p>
+      </div>
+      <div class="activity-card">
+        <div class="activity-icon">🔬</div>
+        <h4>Science Fair</h4>
+        <p>Research-based project work presented at school and district science fairs.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PASSIONS -->
+  <section id="passions">
+    <div class="section-num">04</div>
+    <h2 class="section-title">Passions</h2>
+    <div class="passion">
+      <div class="passion-icon">🤖</div>
+      <h3>Robotics & Engineering</h3>
+      <p>There's something magical about making a machine move, sense, and decide. Robotics is where physics, code, and creativity collide — and I'm hooked. Every build teaches me something new about how the world works.</p>
+    </div>
+    <div class="passion">
+      <div class="passion-icon">🐍</div>
+      <h3>Python & Programming</h3>
+      <p>Python is my language of choice — elegant, powerful, and endlessly versatile. From automation to data to AI, I'm constantly learning and building. Code is the closest thing to a superpower I've found.</p>
+    </div>
+    <div class="passion">
+      <div class="passion-icon">🔭</div>
+      <h3>Exploration & Discovery</h3>
+      <p>I'm at the stage of life where everything feels possible. I love exploring new fields — whether it's astrophysics, philosophy, music, or entrepreneurship. Finding my passions is itself a passion.</p>
+    </div>
+    <div class="passion">
+      <div class="passion-icon">🧠</div>
+      <h3>Problem Solving</h3>
+      <p>Whether it's a bug in my code, a design challenge on the robotics floor, or a puzzle in math class — I love the process of breaking a problem down and finding an elegant solution.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- AWARDS -->
+  <section id="awards">
+    <div class="section-num">05</div>
+    <h2 class="section-title">Awards & Achievements</h2>
+    <div class="award">
+      <div>
+        <div class="award-year">2025 — Academics</div>
+        <h3>Honor Roll — Desert Mountain High School</h3>
+        <p>Recognized for outstanding academic performance across all subjects with a place on the school's honor roll.</p>
+      </div>
+    </div>
+    <div class="award">
+      <div>
+        <div class="award-year">2025 — Robotics</div>
+        <h3>Regional Robotics Competition — Finalist</h3>
+        <p>Competed as part of the Desert Mountain robotics team in the regional championship, reaching the finalist round through innovative engineering and strategy.</p>
+      </div>
+    </div>
+    <div class="award">
+      <div>
+        <div class="award-year">2024 — Technology</div>
+        <h3>School Science Fair — STEM Excellence Award</h3>
+        <p>Awarded for an outstanding project combining programming and physical systems, demonstrating exceptional originality and technical depth.</p>
+      </div>
+    </div>
+    <div class="award">
+      <div>
+        <div class="award-year">2024 — Leadership</div>
+        <h3>Student Leadership Recognition</h3>
+        <p>Acknowledged for contributions to school clubs, peer mentoring, and positive influence within the Desert Mountain community.</p>
+      </div>
+    </div>
+    <div class="award">
+      <div>
+        <div class="award-year">More Coming</div>
+        <h3>The Story Is Still Being Written</h3>
+        <p>Every competition, project, and challenge is an opportunity. This timeline will keep growing.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- BLOG -->
+  <section id="blog">
+    <div class="section-num">06</div>
+    <h2 class="section-title">Blog & Writing</h2>
+    <div class="blog-post">
+      <div class="blog-date">May 2025</div>
+      <h3>What Building a Robot Taught Me About Myself</h3>
+      <p>Robotics is more than gears and code — it's a mirror. Here's what I discovered on the build floor that no textbook could teach.</p>
+      <a href="#" class="read-more">Read More →</a>
+    </div>
+    <div class="blog-post">
+      <div class="blog-date">March 2025</div>
+      <h3>My First 100 Hours of Python: A Beginner's Honest Take</h3>
+      <p>I started Python with zero experience. After 100 hours, here's what clicked, what didn't, and what I'd do differently.</p>
+      <a href="#" class="read-more">Read More →</a>
+    </div>
+    <div class="blog-post">
+      <div class="blog-date">January 2025</div>
+      <h3>Finding Your Passion When You Have Many Interests</h3>
+      <p>Everyone says "follow your passion." But what if you're passionate about everything? Here's how I'm navigating that.</p>
+      <a href="#" class="read-more">Read More →</a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-num">08</div>
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-quote">"Let's build something worth remembering."</div>
+    <p style="font-family:var(--mono);font-size:0.78rem;color:#888;line-height:1.8;max-width:500px;">Whether you're a fellow student, a mentor, a recruiter, or just curious — I'd love to connect. Reach out and let's start a conversation.</p>
+    <div class="contact-info">
+      <div class="contact-item"><span>✉️</span> advaith@email.com</div>
+      <div class="contact-item"><span>🔗</span> linkedin.com/in/advaithpraveen</div>
+      <div class="contact-item"><span>🐙</span> github.com/advaithian2011</div>
+      <div class="contact-item"><span>📍</span> Scottsdale, Arizona</div>
+    </div>
+    <div class="contact-form">
+      <div>
+        <label class="form-label">Your Name</label>
+        <input type="text" class="form-input" placeholder="Jane Smith"/>
+      </div>
+      <div>
+        <label class="form-label">Your Email</label>
+        <input type="email" class="form-input" placeholder="jane@example.com"/>
+      </div>
+      <div>
+        <label class="form-label">Subject</label>
+        <input type="text" class="form-input" placeholder="What's on your mind?"/>
+      </div>
+      <div>
+        <label class="form-label">Message</label>
+        <textarea class="form-input" placeholder="Tell me more..."></textarea>
+      </div>
+      <button class="btn btn-fill" style="width:fit-content;">Send Message</button>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 Advaith Praveen · Desert Mountain High School
+    <a href="#">Back to Top ↑</a>
+  </footer>
+
 </body>
 </html>
