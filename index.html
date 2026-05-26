@@ -27,7 +27,8 @@
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(111,163,216,0.15);
     }
-    .nav-logo { font-family: var(--mono); font-size: 0.9rem; color: var(--blue); letter-spacing: 0.15em; font-weight: 700; }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-logo svg { width: 52px; height: 52px; }
     .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; color: #555; text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: var(--blue); }
@@ -40,7 +41,7 @@
       position: relative; overflow: hidden;
     }
     .hero-tag { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.2em; color: var(--blue); text-transform: uppercase; margin-bottom: 1.5rem; }
-    .hero h1 { font-family: var(--serif); font-size: clamp(3.5rem, 8vw, 7rem); line-height: 1.05; font-weight: 400; }
+    .hero h1 { font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 5.5rem); line-height: 1.05; font-weight: 400; white-space: nowrap; }
     .hero h1 em { font-style: italic; color: var(--blue); }
     .hero-sub { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.18em; color: #888; text-transform: uppercase; margin: 1.5rem 0 2rem; }
     .hero-bio { max-width: 500px; font-size: 1rem; color: #555; line-height: 1.75; margin-bottom: 2.5rem; font-family: var(--mono); font-size: 0.82rem; }
@@ -130,7 +131,7 @@
 
   <!-- NAV -->
   <nav>
-    <div class="nav-logo">AP</div>
+    <a href="#" class="nav-logo"><svg viewBox="0 0 144 144" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="144" height="144" rx="8" fill="#1a1a2e"/><rect x="4" y="4" width="136" height="136" rx="6" fill="none" stroke="#6fa3d8" stroke-width="1.5"/><text x="52" y="98" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="700" fill="#6fa3d8" font-style="italic">A</text><text x="98" y="98" text-anchor="middle" font-family="Georgia,serif" font-size="72" font-weight="700" fill="white" font-style="italic">P</text><line x1="0" y1="112" x2="144" y2="112" stroke="#6fa3d8" stroke-width="1" opacity="0.4"/><text x="72" y="132" text-anchor="middle" font-family="Courier New,monospace" font-size="10" fill="#6fa3d8" letter-spacing="3">ADVAITH PRAVEEN</text></svg></a>
     <ul class="nav-links">
       <li><a href="#academics">Academics</a></li>
       <li><a href="#projects">Projects</a></li>
@@ -143,8 +144,8 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-tag"> </div>
-    <h1>Advaith<br><em>Praveen</em></h1>
+    <div class="hero-tag">Desert Mountain High School · Scottsdale, AZ</div>
+    <h1>Advaith <em>Praveen</em></h1>
     <div class="hero-sub">Student · Builder · Explorer</div>
     <p class="hero-bio">A high school student at Desert Mountain, passionate about robotics, Python, and the relentless pursuit of discovery. Building things, breaking things, and figuring out who I want to be.</p>
     <div class="hero-btns">
@@ -376,8 +377,8 @@
     <div class="contact-quote">"Let's build something worth remembering."</div>
     <p style="font-family:var(--mono);font-size:0.78rem;color:#888;line-height:1.8;max-width:500px;">Whether you're a fellow student, a mentor, a recruiter, or just curious — I'd love to connect. Reach out and let's start a conversation.</p>
     <div class="contact-info">
-      <div class="contact-item"><span>✉️</span> advaithian@gmail.com</div>
-      <div class="contact-item"><span>🔗</span> linkedin.com/in/advaith-praveen-2768203a8</div>
+      <div class="contact-item"><span>✉️</span> advaith@email.com</div>
+      <div class="contact-item"><span>🔗</span> linkedin.com/in/advaithpraveen</div>
       <div class="contact-item"><span>🐙</span> github.com/advaithian2011</div>
       <div class="contact-item"><span>📍</span> Scottsdale, Arizona</div>
     </div>
